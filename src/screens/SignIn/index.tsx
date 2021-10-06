@@ -4,7 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { TextInput, SafeAreaView, Image, View, Button } from "react-native";
 import { LaunchRoutes } from "../../router/routes";
 
-import StyleGuide from "../../constants/StyleGuide";
+// import StyleGuide from "../../constants/StyleGuide";
 import styles from "./style";
 
 const SignIn = () => {
@@ -22,7 +22,7 @@ const SignIn = () => {
 
     const onPress = () => {
         // if (call API okk) {}
-        navigate("HomePage");
+        navigate("tabNavigator");
     };
 
     return (

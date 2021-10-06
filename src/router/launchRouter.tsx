@@ -3,11 +3,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { LaunchRoutes } from "./routes";
 import SignIn from "../screens/SignIn";
-import HomePage from "../screens/HomePage";
+import tabNavigator from "./tabNavigator";
 
 const RootStack = createStackNavigator<LaunchRoutes>();
 
-const Router = () => (
+const LaunchRouter = () => (
     <RootStack.Navigator
         screenOptions={{
             headerShown: false,
@@ -18,10 +18,10 @@ const Router = () => (
             component={SignIn}
         />
         <RootStack.Screen
-            name="HomePage"
-            component={HomePage}
+            name="tabNavigator"
+            component={tabNavigator}
         />
     </RootStack.Navigator>
 );
 
-export default Router;
+export default LaunchRouter;
