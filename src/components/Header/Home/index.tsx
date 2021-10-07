@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ImageBackground, View, TouchableOpacity } from "react-native";
-import { SearchBar } from "react-native-elements";
+import { Searchbar } from "react-native-paper";
 
 import users from "../../../fakeDatas/users";
 
@@ -13,16 +13,16 @@ const HomeHeader = () => {
     const onChangeText = (text: string) => {
         setSearch(text);
     };
-    const onClear = () => {
-        setSearch("");
-    };
-    const onCancel = () => {
-        setSearch("");
-    };
-    const onEndEditing = () => {
-        console.log(search);
+    const onSubmitEditing = () => {
+        // console.log(search);
         // TODO: call API
     };
+    // const onClear = () => {
+    //     setSearch("");
+    // };
+    // const onCancel = () => {
+    //     setSearch("");
+    // };
 
     return (
         <View style={styles.container}>
@@ -40,19 +40,18 @@ const HomeHeader = () => {
                     {isActive && <View style={styles.active} />}
                 </ImageBackground>
             </TouchableOpacity>
-            <SearchBar // add our own searchbar
-                platform="default"
-                lightTheme={false}
-                {...{ onClear }}
-                {...{ onCancel }}
+            <Searchbar // add our own searchbar
+                // {...{ onClear }}
+                // {...{ onCancel }}
                 placeholder="Search"
                 {...{ onChangeText }}
                 value={search}
-                containerStyle={styles.searchBarContainer}
-                inputContainerStyle={styles.inputContainer}
                 inputStyle={styles.input}
                 selectionColor="white"
-                {...{ onEndEditing }}
+                placeholderTextColor="grey"
+                {...{ onSubmitEditing }}
+                style={styles.searchBarContainer}
+                iconColor="grey"
             />
         </View>
     );

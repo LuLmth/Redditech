@@ -3,7 +3,7 @@ const Style = {
         primary: "#FF4400",
         secondary: "#FF6584",
         tertiary: "#38ffb3",
-        backgroundPrimary: "#d5e5ff",
+        backgroundPrimary: "#323238",
         background: "#1C1C1E",
         border: "#f2f2f2",
     },
