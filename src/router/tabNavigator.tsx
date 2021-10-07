@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { ImageBackground, View } from "react-native";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { TabNavigatorRoutes } from "./routes";
 
 import HomeScreen from "../screens/HomeScreen";
+import HomeHeader from "../components/Header/Home";
 
 import StyleGuide from "../constants/StyleGuide";
-import styles from "./tabNavigator.styles";
-import users from "../fakeDatas/users";
 
 const Tab = createBottomTabNavigator<TabNavigatorRoutes>();
 
@@ -50,7 +48,6 @@ const tabNavigator = () => (
             tabBarActiveTintColor: "white",
             tabBarInactiveTintColor: "grey",
             tabBarShowLabel: false,
-            headerShown: false,
             tabBarStyle: [
                 {
                     display: "flex",
@@ -64,24 +61,10 @@ const tabNavigator = () => (
         <Tab.Screen
             name="Home"
             component={HomeScreen}
-            // options={{
-            //     title: undefined,
-            //     header: () => {
-
-            //         return (
-            //             <View style={{ backgroundColor: StyleGuide.palette.background }}>
-            //                 <ImageBackground
-            //                     source={{ uri: users[0].profilePicture }}
-            //                     resizeMode="contain"
-            //                     style={styles.profilePicturePosition}
-            //                     imageStyle={styles.profilePicture}
-            //                 >
-            //                     <View />
-            //                 </ImageBackground>
-            //             </View>
-            //         );
-            //     },
-            // }}
+            options={{
+                title: undefined,
+                header: () => <HomeHeader />,
+            }}
         />
         <Tab.Screen name="Browse" component={HomeScreen} />
         <Tab.Screen name="Create" component={HomeScreen} />
