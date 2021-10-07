@@ -40,13 +40,20 @@ const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 15,
-        padding: 7,
+        padding: 12,
         backgroundColor: StyleGuide.palette.primary,
         position: "absolute",
         bottom: 0,
-        width: "86%",
-        marginLeft: "7%",
+        width: "80%",
+        marginLeft: "10%",
         marginBottom: 75,
+    },
+    buttonText: {
+        ...StyleGuide.typography.headline,
+        color: "white",
+        justifyContent: "center",
+        alignContent: "center",
+        textAlign: "center",
     },
 });
 

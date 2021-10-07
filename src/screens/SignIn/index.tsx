@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { TextInput, SafeAreaView, Image, View, Button } from "react-native";
+import { TextInput, SafeAreaView, Image, Text, TouchableOpacity } from "react-native";
 import { LaunchRoutes } from "../../router/routes";
 
-// import StyleGuide from "../../constants/StyleGuide";
+import StyleGuide from "../../constants/StyleGuide";
 import styles from "./style";
 
 const SignIn = () => {
@@ -46,9 +46,9 @@ const SignIn = () => {
                 keyboardType="default"
                 onChangeText={onChangeTextPassword}
             /> */}
-            <View style={styles.button}>
-                <Button title="Sign in" color="white" {...{ onPress }} />
-            </View>
+            <TouchableOpacity style={styles.button} {...{ onPress }} activeOpacity={0.8}>
+                <Text style={styles.buttonText}>Sign in</Text>
+            </TouchableOpacity>
         </SafeAreaView>
     );
 };

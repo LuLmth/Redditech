@@ -17,12 +17,6 @@ const HomeHeader = () => {
         // console.log(search);
         // TODO: call API
     };
-    // const onClear = () => {
-    //     setSearch("");
-    // };
-    // const onCancel = () => {
-    //     setSearch("");
-    // };
 
     return (
         <View style={styles.container}>
@@ -40,9 +34,7 @@ const HomeHeader = () => {
                     {isActive && <View style={styles.active} />}
                 </ImageBackground>
             </TouchableOpacity>
-            <Searchbar // add our own searchbar
-                // {...{ onClear }}
-                // {...{ onCancel }}
+            <Searchbar
                 placeholder="Search"
                 {...{ onChangeText }}
                 value={search}

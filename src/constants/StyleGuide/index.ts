@@ -5,6 +5,7 @@ const Style = {
         tertiary: "#38ffb3",
         backgroundPrimary: "#323238",
         background: "#1C1C1E",
+        backgroundDarker: "#101011",
         border: "#f2f2f2",
     },
     typography: {
