@@ -28,7 +28,10 @@ const Filter = () => {
         setIsModalVisible(!isModalVisible);
     };
     const onPressModal = (filter: sorted) => {
-        setCurrentFilter(filter);
+        if (filter !== currentFilter) {
+            setCurrentFilter(filter);
+            // TODO: call API with new filter
+        }
         setIsModalVisible(!isModalVisible);
     };
 
