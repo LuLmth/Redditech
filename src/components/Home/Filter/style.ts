@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
-import StyleGuide from "../../constants/StyleGuide";
-import Dimensions from "../../constants/Dimensions";
+import StyleGuide from "../../../constants/StyleGuide";
+import Dimensions from "../../../constants/Dimensions";
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: StyleGuide.palette.backgroundDarker,
-        marginTop: 10,
+        backgroundColor: "black",
+        marginTop: 5,
         height: 40,
         flexDirection: "row",
         justifyContent: "flex-start",

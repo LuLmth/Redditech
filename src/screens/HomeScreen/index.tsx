@@ -1,12 +1,12 @@
 import React from "react";
-import { Text, SafeAreaView } from "react-native";
-import Filter from "../../components/Filter";
+import { SafeAreaView } from "react-native";
+import Feed from "../../components/Home/Feed";
 
 import styles from "./style";
 
 const HomeScreen = () => (
     <SafeAreaView style={styles.container}>
-        <Filter />
+        <Feed />
     </SafeAreaView>
 );
 
