@@ -1,14 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 
-import LoadAssets from "./src/components/LoadAssets";
 import Router from "./src/router/launchRouter";
 
 const App = () => (
-    <LoadAssets>
+    <NavigationContainer>
         <StatusBar style="light" />
         <Router />
-    </LoadAssets>
+    </NavigationContainer>
 );
 
 export default App;
