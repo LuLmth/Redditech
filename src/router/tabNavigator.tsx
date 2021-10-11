@@ -5,7 +5,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TabNavigatorRoutes } from "./routes";
 
 import HomeScreen from "../screens/HomeScreen";
-import HomeHeader from "../components/Header/Home";
+import HomeHeader from "../components/Home/Header";
 
 import StyleGuide from "../constants/StyleGuide";
 

@@ -4,7 +4,7 @@ import StyleGuide from "../../constants/StyleGuide";
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: StyleGuide.palette.background,
+        backgroundColor: "black",
         flex: 1,
     },
     title: {

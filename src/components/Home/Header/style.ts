@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flexDirection: "row",
         alignItems: "center",
+        height: 100,
     },
     profilePicturePosition: { marginLeft: 25, marginTop: 44 },
     profilePicture: { borderRadius: 1000, borderWidth: 1, width: 36, height: 36, position: "relative" },
