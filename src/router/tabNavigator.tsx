@@ -1,11 +1,15 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 
 import { TabNavigatorRoutes } from "./routes";
 
 import HomeScreen from "../screens/HomeScreen";
-import HomeHeader from "../components/Home/Header";
+import SubScreen from "../screens/SubScreen";
+import CreateScreen from "../screens/CreateScreen";
+import ChatScreen from "../screens/ChatScreen";
+import Profilecreen from "../screens/ProfileSreen";
+import Header from "../components/Header";
 
 import StyleGuide from "../constants/StyleGuide";
 
@@ -18,7 +22,7 @@ const tabNavigator = () => (
                 if (route.name === "Home") {
                     return <Ionicons name={focused ? "home-sharp" : "home-outline"} color={color} size={size} />;
                 }
-                if (route.name === "Browse") {
+                if (route.name === "Sub") {
                     return (
                         <MaterialCommunityIcons
                             name={focused ? "folder-search" : "folder-search-outline"}
@@ -39,10 +43,8 @@ const tabNavigator = () => (
                         />
                     );
                 }
-                if (route.name === "Inbox") {
-                    return (
-                        <MaterialCommunityIcons name={focused ? "bell" : "bell-outline"} color={color} size={size} />
-                    );
+                if (route.name === "Profile") {
+                    return <FontAwesome5 name={focused ? "user-alt" : "user"} color={color} size={size - 4} />;
                 }
             },
             tabBarActiveTintColor: "white",
@@ -63,13 +65,28 @@ const tabNavigator = () => (
             component={HomeScreen}
             options={{
                 title: undefined,
-                header: () => <HomeHeader />,
+                header: () => <Header />,
             }}
         />
-        <Tab.Screen name="Browse" component={HomeScreen} />
-        <Tab.Screen name="Create" component={HomeScreen} />
-        <Tab.Screen name="Chat" component={HomeScreen} />
-        <Tab.Screen name="Inbox" component={HomeScreen} />
+        <Tab.Screen
+            name="Sub"
+            component={SubScreen}
+            options={{
+                title: undefined,
+                header: () => <Header />,
+            }}
+        />
+        <Tab.Screen
+            name="Create"
+            component={CreateScreen}
+            options={{ headerStyle: { backgroundColor: StyleGuide.palette.background } }}
+        />
+        <Tab.Screen
+            name="Chat"
+            component={ChatScreen}
+            options={{ headerStyle: { backgroundColor: StyleGuide.palette.background } }}
+        />
+        <Tab.Screen name="Profile" component={Profilecreen} options={{ headerShown: false }} />
     </Tab.Navigator>
 );
 

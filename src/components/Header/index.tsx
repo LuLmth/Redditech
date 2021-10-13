@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { ImageBackground, View, TouchableOpacity } from "react-native";
 import { Searchbar } from "react-native-paper";
 
-import users from "../../../fakeDatas/users";
+import users from "../../fakeDatas/users";
 
 import styles from "./style";
 
-const HomeHeader = () => {
+const Header = () => {
     const [isActive, setIsActive] = useState<boolean>(true);
     const [search, setSearch] = useState<string>("");
 
@@ -49,4 +49,4 @@ const HomeHeader = () => {
     );
 };
 
-export default HomeHeader;
+export default Header;
