@@ -4,6 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { SafeAreaView, Image, Text, TouchableOpacity } from "react-native";
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, ResponseType, useAuthRequest } from 'expo-auth-session';
+import { REDDIT_CLIENT_ID, REDDIT_REDIRECT } from 'react-native-dotenv';
 import { LaunchRoutes } from "../../router/routes";
 
 import StyleGuide from "../../constants/StyleGuide";
@@ -13,30 +14,30 @@ WebBrowser.maybeCompleteAuthSession();
 
 const SignIn = () => {
     const { navigate } = useNavigation<StackNavigationProp<LaunchRoutes, "SignIn">>();
-    const discovery = {
+    const authDiscovery = {
         authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',
         tokenEndpoint: 'https://www.reddit.com/api/v1/access_token',
     };
-    const [request, response, PressToSignIn] = useAuthRequest(
+    const [, responseAuth, PressToSignIn] = useAuthRequest(
         {
             responseType: ResponseType.Token,
-            clientId: 'NwbQxUB144Is0B_ZuBAYxw',
+            clientId: REDDIT_CLIENT_ID || '',
             scopes: ['identity', 'history', 'account', 'read'],
             redirectUri: makeRedirectUri({
-                scheme: 'exp://n3-vpf.anonymous.b-dev-501-bdx-5-1-redditech-alexandre-lacoste.exp.direct:80',
+                scheme: REDDIT_REDIRECT || '',
             }),
         },
-        discovery,
+        authDiscovery,
     );
 
     useEffect(() => {
-        if (response?.type === 'success') {
-            const { access_token } = response.params;
+        if (responseAuth?.type === 'success') {
+            const { access_token } = responseAuth.params;
 
             console.log('Access token =>', access_token);
             navigate('tabNavigator');
         }
-    }, [response]);
+    }, [responseAuth]);
 
     return (
         <SafeAreaView style={styles.container}>
