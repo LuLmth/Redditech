@@ -12,7 +12,7 @@ const LaunchRouter = () => (
         screenOptions={{
             headerShown: false,
         }}
-        initialRouteName="tabNavigator"
+        initialRouteName="SignIn"
     >
         <RootStack.Screen
             name="SignIn"
