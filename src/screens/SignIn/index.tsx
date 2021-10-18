@@ -5,6 +5,7 @@ import { SafeAreaView, Image, Text, TouchableOpacity } from "react-native";
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, ResponseType, useAuthRequest } from 'expo-auth-session';
 import { REDDIT_CLIENT_ID, REDDIT_REDIRECT } from 'react-native-dotenv';
+import { saveValue } from "../../services/SecureStore";
 import { LaunchRoutes } from "../../router/routes";
 
 import StyleGuide from "../../constants/StyleGuide";
@@ -34,7 +35,7 @@ const SignIn = () => {
         if (responseAuth?.type === 'success') {
             const { access_token } = responseAuth.params;
 
-            console.log('Access token =>', access_token);
+            saveValue('accessToken', access_token);
             navigate('tabNavigator');
         }
     }, [responseAuth]);
