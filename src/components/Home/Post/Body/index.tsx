@@ -1,16 +1,23 @@
 import React from "react";
 import { Image, View } from "react-native";
+import { Body as BodyType, bodyFormat } from "../../../../types/post";
 
 import styles from "./style";
 
 interface BodyProps {
-    imageUri: string;
+    bodyContent: BodyType;
 }
 
-const Body = ({ imageUri }: BodyProps) => (
-    <View style={styles.container}>
-        <Image source={{ uri: imageUri }} style={styles.image} />
-    </View>
-);
+const Body = ({ bodyContent }: BodyProps) => {
+    if (bodyContent.uri === null) {
+        return <></>;
+    }
+
+    return (
+        <View style={styles.container}>
+            {bodyContent.format === bodyFormat.png && <Image source={{ uri: bodyContent.uri }} style={styles.image} />}
+        </View>
+    );
+};
 
 export default Body;

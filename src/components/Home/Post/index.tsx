@@ -1,10 +1,11 @@
 import React from "react";
 import { View } from "react-native";
-import { Post as PostType} from "../../../fakeDatas/posts";
 
 import Header from "./Header";
 import Body from "./Body";
 import Footer from "./Footer";
+
+import { Post as PostType } from "../../../types/post";
 
 interface PostProps {
     post: PostType;
@@ -13,7 +14,7 @@ interface PostProps {
 const Post = ({ post }: PostProps) => (
     <View>
         <Header headerContent={post.header} />
-        <Body imageUri={post.body} />
+        <Body bodyContent={post.body} />
         <Footer footerContent={post.footer} />
     </View>
 );

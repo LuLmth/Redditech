@@ -4,8 +4,8 @@ export const saveValue = async (key: string, value: any) => {
     await SecureStore.setItemAsync(key, value);
 };
 
-export const getValue: any = async (key: string) => {
-    const value = await SecureStore.getItemAsync(key);
+export const getValue = async (key: string) => {
+    const value: string | null = await SecureStore.getItemAsync(key);
 
     return value;
 };
