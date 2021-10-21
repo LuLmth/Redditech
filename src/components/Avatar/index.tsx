@@ -4,7 +4,8 @@ import { View, Image, Text } from "react-native";
 import styles from "./style";
 
 const Avatar = () => {
-    const [username, setUsername] = useState<string | null>(); // TODO: call API for username
+    // TODO: call API for getting profile properties
+    const [username, setUsername] = useState<string | null>();
 
     useEffect(() => {
         setUsername("IamDecoste");

@@ -6,8 +6,12 @@ import { sorted } from "../../../types/filter";
 
 import styles from "./style";
 
-const Filter = () => {
-    const [currentFilter, setCurrentFilter] = useState<sorted>(sorted.best);
+interface FilterProps {
+    filterValue: sorted;
+    setFilterValue: React.Dispatch<React.SetStateAction<sorted>>;
+}
+
+const Filter = ({ filterValue, setFilterValue }: FilterProps) => {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
     const onPressFilter = () => {
@@ -20,8 +24,8 @@ const Filter = () => {
         setIsModalVisible(!isModalVisible);
     };
     const onPressModal = (filter: sorted) => {
-        if (filter !== currentFilter) {
-            setCurrentFilter(filter);
+        if (filter !== filterValue) {
+            setFilterValue(filter);
             // TODO: call API with new filter
         }
         setIsModalVisible(!isModalVisible);
@@ -30,37 +34,37 @@ const Filter = () => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.touchable} onPress={onPressFilter}>
-                {currentFilter === sorted.best && (
+                {filterValue === sorted.best && (
                     <>
                         <MaterialCommunityIcons name="rocket-outline" color="grey" size={20} style={styles.icon} />
                         <Text style={styles.text}>BEST POST</Text>
                     </>
                 )}
-                {currentFilter === sorted.hot && (
+                {filterValue === sorted.hot && (
                     <>
                         <SimpleLineIcons name="fire" color="grey" size={18} style={styles.icon} />
                         <Text style={styles.text}>HOT POST</Text>
                     </>
                 )}
-                {currentFilter === sorted.new && (
+                {filterValue === sorted.new && (
                     <>
                         <MaterialCommunityIcons name="selection-ellipse" color="grey" size={20} style={styles.icon} />
                         <Text style={styles.text}>NEW POST</Text>
                     </>
                 )}
-                {currentFilter === sorted.top && (
+                {filterValue === sorted.top && (
                     <>
                         <MaterialCommunityIcons name="arrow-expand-up" color="grey" size={19} style={styles.icon} />
                         <Text style={styles.text}>TOP POST</Text>
                     </>
                 )}
-                {currentFilter === sorted.controversial && (
+                {filterValue === sorted.controversial && (
                     <>
                         <MaterialCommunityIcons name="sword" color="grey" size={20} style={styles.icon} />
                         <Text style={styles.text}>CONTROVERSIAL POST</Text>
                     </>
                 )}
-                {currentFilter === sorted.rising && (
+                {filterValue === sorted.rising && (
                     <>
                         <MaterialCommunityIcons name="elevation-rise" color="grey" size={20} style={styles.icon} />
                         <Text style={styles.text}>RISING POST</Text>
@@ -80,14 +84,14 @@ const Filter = () => {
                         <TouchableOpacity style={styles.touchableModal} onPress={() => onPressModal(sorted.best)}>
                             <MaterialCommunityIcons
                                 name="rocket-outline"
-                                color={currentFilter === sorted.best ? "white" : "grey"}
+                                color={filterValue === sorted.best ? "white" : "grey"}
                                 size={20}
                                 style={styles.icon}
                             />
                             <Text
                                 style={[
                                     styles.text,
-                                    { fontSize: 13, color: currentFilter === sorted.best ? "white" : "grey" },
+                                    { fontSize: 13, color: filterValue === sorted.best ? "white" : "grey" },
                                 ]}
                             >
                                 Best
@@ -96,14 +100,14 @@ const Filter = () => {
                         <TouchableOpacity style={styles.touchableModal} onPress={() => onPressModal(sorted.hot)}>
                             <SimpleLineIcons
                                 name="fire"
-                                color={currentFilter === sorted.hot ? "white" : "grey"}
+                                color={filterValue === sorted.hot ? "white" : "grey"}
                                 size={18}
                                 style={styles.icon}
                             />
                             <Text
                                 style={[
                                     styles.text,
-                                    { fontSize: 13, color: currentFilter === sorted.hot ? "white" : "grey" },
+                                    { fontSize: 13, color: filterValue === sorted.hot ? "white" : "grey" },
                                 ]}
                             >
                                 Hot
@@ -112,14 +116,14 @@ const Filter = () => {
                         <TouchableOpacity style={styles.touchableModal} onPress={() => onPressModal(sorted.new)}>
                             <MaterialCommunityIcons
                                 name="selection-ellipse"
-                                color={currentFilter === sorted.new ? "white" : "grey"}
+                                color={filterValue === sorted.new ? "white" : "grey"}
                                 size={20}
                                 style={styles.icon}
                             />
                             <Text
                                 style={[
                                     styles.text,
-                                    { fontSize: 13, color: currentFilter === sorted.new ? "white" : "grey" },
+                                    { fontSize: 13, color: filterValue === sorted.new ? "white" : "grey" },
                                 ]}
                             >
                                 New
@@ -128,14 +132,14 @@ const Filter = () => {
                         <TouchableOpacity style={styles.touchableModal} onPress={() => onPressModal(sorted.top)}>
                             <MaterialCommunityIcons
                                 name="arrow-expand-up"
-                                color={currentFilter === sorted.top ? "white" : "grey"}
+                                color={filterValue === sorted.top ? "white" : "grey"}
                                 size={19}
                                 style={styles.icon}
                             />
                             <Text
                                 style={[
                                     styles.text,
-                                    { fontSize: 13, color: currentFilter === sorted.top ? "white" : "grey" },
+                                    { fontSize: 13, color: filterValue === sorted.top ? "white" : "grey" },
                                 ]}
                             >
                                 Top
@@ -147,14 +151,14 @@ const Filter = () => {
                         >
                             <MaterialCommunityIcons
                                 name="sword"
-                                color={currentFilter === sorted.controversial ? "white" : "grey"}
+                                color={filterValue === sorted.controversial ? "white" : "grey"}
                                 size={20}
                                 style={styles.icon}
                             />
                             <Text
                                 style={[
                                     styles.text,
-                                    { fontSize: 13, color: currentFilter === sorted.controversial ? "white" : "grey" },
+                                    { fontSize: 13, color: filterValue === sorted.controversial ? "white" : "grey" },
                                 ]}
                             >
                                 Controversial
@@ -163,14 +167,14 @@ const Filter = () => {
                         <TouchableOpacity style={styles.touchableModal} onPress={() => onPressModal(sorted.rising)}>
                             <MaterialCommunityIcons
                                 name="elevation-rise"
-                                color={currentFilter === sorted.rising ? "white" : "grey"}
+                                color={filterValue === sorted.rising ? "white" : "grey"}
                                 size={20}
                                 style={styles.icon}
                             />
                             <Text
                                 style={[
                                     styles.text,
-                                    { fontSize: 13, color: currentFilter === sorted.rising ? "white" : "grey" },
+                                    { fontSize: 13, color: filterValue === sorted.rising ? "white" : "grey" },
                                 ]}
                             >
                                 Rising

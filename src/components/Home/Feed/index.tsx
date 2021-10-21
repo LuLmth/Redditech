@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AppLoading from "expo-app-loading";
-import { FlatList } from "react-native";
+import { FlatList, ActivityIndicator, View } from "react-native";
 import Post from "../Post";
 import Filter from "../Filter";
 import { ApiGetRequest } from "../../../services/ApiRequest";
@@ -8,22 +7,39 @@ import { getValue } from "../../../services/SecureStore";
 import { Post as PostType, bodyFormat } from "../../../types/post";
 import { sorted } from "../../../types/filter";
 
-const Feed = ({ filter }: FeedProps) => {
+import styles from "./style";
+
+const fakeProfilePicture =
+    "https://air-marketing-assets.s3.amazonaws.com/blog/logo-db/reddit-logo/reddit-logo-png-1.png";
+
+const Feed = () => {
     const [posts, setPosts] = useState<PostType[]>([]);
-    const [filterType, setFilterType] = useState<sorted>(filter);
+    const [filterValue, setFilterValue] = useState<sorted>(sorted.best);
+    const [accessToken, setAccessToken] = useState<string | null>(null);
 
     useEffect(() => {
+        const fetchToken = async () => {
+            try {
+                const token = await getValue("accessToken");
+                setAccessToken(token);
+            } catch (e) {
+                console.log(e.errors);
+            }
+        };
+        fetchToken();
+    }, []);
+
+    useEffect(() => {
+        setPosts([]);
         const fetchPosts = async () => {
             try {
-                const access_token = await getValue("accessToken");
-                const postsData = await ApiGetRequest("/best.json?raw_json=1", access_token || "");
+                const postsData = await ApiGetRequest(`/${filterValue}.json?raw_json=1`, accessToken || "");
                 const postArray: PostType[] = postsData.data.children.map((postApi: any) => {
                     const postApiData = postApi.data;
                     const postElement: PostType = {
                         id: postApiData.id,
                         header: {
-                            profilePicture:
-                                "https://air-marketing-assets.s3.amazonaws.com/blog/logo-db/reddit-logo/reddit-logo-png-1.png",
+                            profilePicture: fakeProfilePicture,
                             username: postApiData.subreddit_name_prefixed,
                             postedBy: postApiData.author,
                             postedTimed: "???",
@@ -44,10 +60,14 @@ const Feed = ({ filter }: FeedProps) => {
             }
         };
         fetchPosts();
-    }, []);
+    }, [filterValue, accessToken]);
 
     if (posts.length === 0) {
-        return <AppLoading />;
+        return (
+            <View style={styles.activityIndicator}>
+                <ActivityIndicator />
+            </View>
+        );
     }
 
     return (
@@ -55,7 +75,7 @@ const Feed = ({ filter }: FeedProps) => {
             data={posts}
             renderItem={({ item }) => <Post post={item} />}
             keyExtractor={({ id }) => id}
-            ListHeaderComponent={Filter}
+            ListHeaderComponent={<Filter filterValue={filterValue} setFilterValue={setFilterValue} />}
             showsVerticalScrollIndicator={false}
         />
     );

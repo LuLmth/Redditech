@@ -18,6 +18,8 @@ const Header = () => {
         // TODO: call API
     };
 
+    // const imageProfile = // Todo: call API
+
     return (
         <View style={styles.container}>
             <TouchableOpacity
