@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         color: "white",
         alignSelf: "center",
     },
+    activityIndicator: { flex: 1, justifyContent: "center" },
 });
 
 export default styles;

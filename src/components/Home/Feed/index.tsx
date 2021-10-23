@@ -29,11 +29,31 @@ const Feed = () => {
         fetchToken();
     }, []);
 
+    const getBodyContent = (postApiData: any) => {
+        const isAVideo = postApiData.is_video === "true";
+        const isSelf = postApiData.is_self === "true";
+        const imagesArray = postApiData.preview ? postApiData.preview.images : [];
+
+        if (isAVideo && postApiData.secure_media) {
+            const mediaUrl = postApiData.secure_media.reddit_video.scrubber_media_url;
+            console.log("It's a video!", mediaUrl);
+            return mediaUrl;
+        }
+        if (isSelf) {
+            const textContent = postApiData.selftext;
+            console.log("Post have text in body", textContent);
+        }
+        if (imagesArray.length > 0) {
+            return imagesArray[0].source.url;
+        }
+        return null;
+    };
+
     useEffect(() => {
         setPosts([]);
         const fetchPosts = async () => {
             try {
-                const postsData = await ApiGetRequest(`/${filterValue}.json?raw_json=1`, accessToken || "");
+                const postsData = await ApiGetRequest(`/${filterValue}?raw_json=1`, accessToken || "");
                 const postArray: PostType[] = postsData.data.children.map((postApi: any) => {
                     const postApiData = postApi.data;
                     const postElement: PostType = {
@@ -45,7 +65,7 @@ const Feed = () => {
                             postedTimed: "???",
                             title: postApiData.title,
                         },
-                        body: { uri: null, format: bodyFormat.png },
+                        body: { uri: getBodyContent(postApiData), format: bodyFormat.png },
                         footer: {
                             like: postApiData.ups,
                             dislike: postApiData.downs,
