@@ -27,12 +27,14 @@ const Avatar = () => {
         const fetchProfile = async () => {
             try {
                 const profileData = await ApiGetRequest(`/api/v1/me?raw_json=1`, accessToken || "");
+                const createdProfileDate = new Date(profileData.created * 1000);
+                const diffDays = (new Date().getTime() - createdProfileDate.getTime()) / (1000 * 3600 * 24);
                 const profileCompleted: ProfileType = {
                     profilePicture: profileData.icon_img,
                     username: profileData.name,
                     karma: profileData.total_karma,
+                    days: Math.round(diffDays),
                 };
-
                 setProfile(profileCompleted);
             } catch (e) {
                 console.log(e.errors);
@@ -59,6 +61,7 @@ const Avatar = () => {
             />
             <Text style={styles.username}>{profile.username}</Text>
             <Text style={styles.username}>Karma: {profile.karma}</Text>
+            <Text style={styles.username}>Creation: {profile.days} j</Text>
         </View>
     );
 };
