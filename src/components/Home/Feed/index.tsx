@@ -52,13 +52,13 @@ const Feed = () => {
     const getTimeDiff: string = unixTime => {
         const createdDate = new Date(unixTime * 1000);
         const now = new Date();
-        const diffMinutes = parseInt(Math.abs(now.getTime() - createdDate.getTime()) / (1000 * 60) % 60);
-        const diffHours = parseInt(Math.abs(now - createdDate) / (1000 * 60 * 60) % 24);
-        const diffDays = parseInt((now - createdDate) / (1000 * 60 * 60 * 24));
+        const diffMinutes = Math.round(Math.abs(now.getTime() - createdDate.getTime()) / (1000 * 60) % 60);
+        const diffHours = Math.round(Math.abs(now.getTime() - createdDate.getTime()) / (1000 * 60 * 60) % 24);
+        const diffDays = Math.round((now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
 
-        if (diffDays > 0) return `${Math.round(diffDays)}j`;
-        if (diffHours > 0) return `${Math.round(diffHours)}h`;
-        return `${Math.round(diffMinutes)}min`;
+        if (diffDays > 0) return `${diffDays}j`;
+        if (diffHours > 0) return `${diffHours}h`;
+        return `${diffMinutes}min`;
     };
 
     useEffect(() => {

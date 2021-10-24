@@ -30,10 +30,11 @@ const Avatar = () => {
                 const createdProfileDate = new Date(profileData.created * 1000);
                 const diffDays = (new Date().getTime() - createdProfileDate.getTime()) / (1000 * 3600 * 24);
                 const profileCompleted: ProfileType = {
-                    profilePicture: profileData.icon_img,
-                    username: profileData.name,
+                    profilePicture: profileData.subreddit.icon_img,
+                    username: profileData.subreddit.display_name_prefixed,
                     karma: profileData.total_karma,
                     days: Math.round(diffDays),
+                    description: profileData.subreddit.public_description,
                 };
                 setProfile(profileCompleted);
             } catch (e) {
@@ -62,6 +63,7 @@ const Avatar = () => {
             <Text style={styles.username}>{profile.username}</Text>
             <Text style={styles.username}>Karma: {profile.karma}</Text>
             <Text style={styles.username}>Creation: {profile.days} j</Text>
+            <Text style={styles.username}>Description: {profile.description}</Text>
         </View>
     );
 };
