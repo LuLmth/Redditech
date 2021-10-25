@@ -33,20 +33,22 @@ const Feed = () => {
         const isAVideo = postApiData.is_video === "true";
         const isSelf = postApiData.is_self === "true";
         const imagesArray = postApiData.preview ? postApiData.preview.images : [];
+        const body = { uri: null, format: bodyFormat.none };
 
         if (isAVideo && postApiData.secure_media) {
-            const mediaUrl = postApiData.secure_media.reddit_video.scrubber_media_url;
-            console.log("It's a video!", mediaUrl);
-            return mediaUrl;
+            const mediaUrl = postApiData.secure_media.reddit_video.fallback_url;
+            body.uri = mediaUrl;
+            body.format = bodyFormat.mp4;
+        } else if (imagesArray.length > 0) {
+            body.uri = imagesArray[0].source.url;
+            body.format = bodyFormat.png;
         }
         if (isSelf) {
             const textContent = postApiData.selftext;
             console.log("Post have text in body", textContent);
         }
-        if (imagesArray.length > 0) {
-            return imagesArray[0].source.url;
-        }
-        return null;
+        console.log(body);
+        return body;
     };
 
     const getTimeDiff = (unixTime: number) => {
@@ -77,7 +79,7 @@ const Feed = () => {
                             postedTimed: getTimeDiff(postApiData.created),
                             title: postApiData.title,
                         },
-                        body: { uri: getBodyContent(postApiData), format: bodyFormat.png },
+                        body: getBodyContent(postApiData),
                         footer: {
                             like: postApiData.ups,
                             dislike: postApiData.downs,

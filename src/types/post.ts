@@ -1,6 +1,7 @@
 export enum bodyFormat {
     none = "none",
     gif = "gif",
+    mp4 = "mp4",
     png = "png",
 }
 
