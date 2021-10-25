@@ -23,7 +23,7 @@ const SignIn = () => {
         {
             responseType: ResponseType.Token,
             clientId: REDDIT_CLIENT_ID || "",
-            scopes: ["identity", "history", "account", "read"],
+            scopes: ["identity", "mysubreddits", "read"],
             redirectUri: makeRedirectUri({
                 scheme: REDDIT_REDIRECT || "",
             }),

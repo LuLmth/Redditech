@@ -24,10 +24,21 @@ const SubRedditList = () => {
     }, []);
 
     useEffect(() => {
-        setSubReddit([]);
         const fetchSubs = async () => {
             try {
-                //
+                const subredditsData = await ApiGetRequest(`/subreddits/mine/subscriber?raw_json=1`, accessToken || "");
+                const subredditArray: SubRedditType[] = subredditsData.data.children.map((subredditApi: any) => {
+                    const subredditApiData = subredditApi.data;
+                    const subredditElement: SubRedditType = {
+                        id: subredditApiData.id,
+                        subRedditName: subredditApiData.display_name_prefixed,
+                        profilePicture: subredditApiData.icon_img,
+                        url: subredditApiData.url,
+                        nbSub: subredditApiData.subscribers,
+                    };
+                    return subredditElement;
+                });
+                setSubReddit(subredditArray);
             } catch (e) {
                 console.log(e.errors);
             }
