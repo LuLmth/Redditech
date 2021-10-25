@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import Dimensions from "../../constants/Dimensions";
+import StyleGuide from "../../constants/StyleGuide";
 
 const styles = StyleSheet.create({
     container: {
@@ -8,7 +9,7 @@ const styles = StyleSheet.create({
     },
     image: {
         borderRadius: 1000,
-        borderColor: "#5e7bfe",
+        borderColor: StyleGuide.palette.primary,
         borderWidth: 1,
         width: Dimensions.screenWidth / 2,
         height: Dimensions.screenWidth / 2,
@@ -21,7 +22,11 @@ const styles = StyleSheet.create({
         color: "white",
         alignSelf: "center",
     },
-    activityIndicator: { flex: 1, justifyContent: "center" },
+    activityIndicator: {
+        padding: "50%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
 });
 
 export default styles;

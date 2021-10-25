@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
         height: Dimensions.get("window").width,
         marginTop: 10,
     },
+    video: {
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").width,
+        marginTop: 10,
+    },
 });
 
 export default styles;

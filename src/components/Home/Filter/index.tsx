@@ -26,7 +26,6 @@ const Filter = ({ filterValue, setFilterValue }: FilterProps) => {
     const onPressModal = (filter: sorted) => {
         if (filter !== filterValue) {
             setFilterValue(filter);
-            // TODO: call API with new filter
         }
         setIsModalVisible(!isModalVisible);
     };

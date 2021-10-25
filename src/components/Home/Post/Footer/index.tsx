@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { MaterialCommunityIcons, FontAwesome5, Ionicons } from "@expo/vector-icons";
 
@@ -12,6 +12,18 @@ interface FooterProps {
 const Footer = ({ footerContent }: FooterProps) => {
     const [isLiked, setIsLiked] = useState<boolean>(false);
     const [isDisliked, setIsDisliked] = useState<boolean>(false);
+    const [footerLike, setFooterLike] = useState<number>(footerContent.like);
+    const firstValueLike = footerContent.like;
+
+    useEffect(() => {
+        if (isLiked) {
+            setFooterLike(firstValueLike + 1);
+        } else if (isDisliked) {
+            setFooterLike(firstValueLike - 1);
+        } else {
+            setFooterLike(firstValueLike);
+        }
+    }, [isLiked, isDisliked]);
 
     return (
         <>
@@ -33,7 +45,7 @@ const Footer = ({ footerContent }: FooterProps) => {
                             size={20}
                         />
                     </TouchableOpacity>
-                    <Text style={styles.text}>{footerContent.like + (isLiked ? 1 : 0)}</Text>
+                    <Text style={styles.text}>{footerLike}</Text>
                     <TouchableOpacity
                         onPress={() => {
                             if (isDisliked) {
@@ -50,7 +62,6 @@ const Footer = ({ footerContent }: FooterProps) => {
                             size={20}
                         />
                     </TouchableOpacity>
-                    <Text style={styles.text}>{footerContent.dislike + (isDisliked ? 1 : 0)}</Text>
                     <FontAwesome5 name="comment-alt" color="grey" size={16} style={styles.comment} />
                     <Text style={styles.text}>{footerContent.comment}</Text>
                     <Ionicons name="ios-share-social-outline" color="grey" size={20} />

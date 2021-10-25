@@ -7,7 +7,6 @@ import { Profile as ProfileType } from "../../types/profile";
 import styles from "./style";
 
 const Avatar = () => {
-    // TODO: call API for getting profile properties
     const [accessToken, setAccessToken] = useState<string | null>(null);
     const [profile, setProfile] = useState<ProfileType | null>(null);
 
@@ -62,7 +61,7 @@ const Avatar = () => {
             />
             <Text style={styles.username}>{profile.username}</Text>
             <Text style={styles.username}>Karma: {profile.karma}</Text>
-            <Text style={styles.username}>Creation: {profile.days} j</Text>
+            <Text style={styles.username}>Creation: {profile.days} d</Text>
             <Text style={styles.username}>Description: {profile.description}</Text>
         </View>
     );

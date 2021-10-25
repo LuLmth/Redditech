@@ -5,7 +5,6 @@ import { Searchbar } from "react-native-paper";
 import { ApiGetRequest } from "../../services/ApiRequest";
 import { getValue } from "../../services/SecureStore";
 
-import users from "../../fakeDatas/users";
 import styles from "./style";
 
 const Header = () => {
@@ -59,14 +58,16 @@ const Header = () => {
                     setIsActive(!isActive);
                 }}
             >
-                <ImageBackground
-                    source={{ uri: profileImage || users[0].profilePicture }}
-                    resizeMode="contain"
-                    style={styles.profilePicturePosition}
-                    imageStyle={styles.profilePicture}
-                >
-                    {isActive && <View style={styles.active} />}
-                </ImageBackground>
+                {profileImage !== "" && (
+                    <ImageBackground
+                        source={{ uri: profileImage }}
+                        resizeMode="contain"
+                        style={styles.profilePicturePosition}
+                        imageStyle={styles.profilePicture}
+                    >
+                        {isActive && <View style={styles.active} />}
+                    </ImageBackground>
+                )}
             </TouchableOpacity>
             <Searchbar
                 placeholder="Search"

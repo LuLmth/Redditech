@@ -58,7 +58,7 @@ const Feed = () => {
         const diffHours = Math.round(Math.abs(now.getTime() - createdDate.getTime()) / (1000 * 60 * 60) % 24);
         const diffDays = Math.round((now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
 
-        if (diffDays > 0) return `${diffDays}j`;
+        if (diffDays > 0) return `${diffDays}d`;
         if (diffHours > 0) return `${diffHours}h`;
         return `${diffMinutes}min`;
     };
