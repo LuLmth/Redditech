@@ -49,7 +49,7 @@ const Feed = () => {
         return null;
     };
 
-    const getTimeDiff: string = unixTime => {
+    const getTimeDiff = (unixTime: number) => {
         const createdDate = new Date(unixTime * 1000);
         const now = new Date();
         const diffMinutes = Math.round(Math.abs(now.getTime() - createdDate.getTime()) / (1000 * 60) % 60);
