@@ -47,7 +47,6 @@ const Feed = () => {
             const textContent = postApiData.selftext;
             console.log("Post have text in body", textContent);
         }
-        console.log(body);
         return body;
     };
 
