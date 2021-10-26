@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: StyleGuide.palette.background,
     },
-    rowView: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+    rowView: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 5 },
     left: {
         flexDirection: "row",
         alignItems: "center",
@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         fontSize: 11,
         color: "grey",
+    },
+    separator: {
+        backgroundColor: "black",
+        padding: 2,
     },
 });
 

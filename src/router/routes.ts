@@ -10,3 +10,8 @@ export type TabNavigatorRoutes = {
     Chat: undefined;
     Profile: undefined;
 };
+
+export type SubRoutes = {
+    Sub: undefined;
+    SubContent: { uri: string };
+};

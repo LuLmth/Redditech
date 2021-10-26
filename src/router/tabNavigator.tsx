@@ -5,11 +5,12 @@ import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-ico
 import { TabNavigatorRoutes } from "./routes";
 
 import HomeScreen from "../screens/HomeScreen";
-import SubScreen from "../screens/SubScreen";
 import CreateScreen from "../screens/CreateScreen";
 import ChatScreen from "../screens/ChatScreen";
 import Profilecreen from "../screens/ProfileSreen";
 import Header from "../components/Header";
+
+import SubRouter from "./subRouter";
 
 import StyleGuide from "../constants/StyleGuide";
 
@@ -70,11 +71,7 @@ const tabNavigator = () => (
         />
         <Tab.Screen
             name="Sub"
-            component={SubScreen}
-            options={{
-                title: undefined,
-                header: () => <Header />,
-            }}
+            component={SubRouter}
         />
         <Tab.Screen
             name="Create"

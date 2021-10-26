@@ -32,7 +32,7 @@ const SubRedditList = () => {
                     const subredditElement: SubRedditType = {
                         id: subredditApiData.id,
                         subRedditName: subredditApiData.display_name_prefixed,
-                        profilePicture: subredditApiData.community_icon,
+                        profilePicture: subredditApiData.community_icon || subredditApiData.icon_img,
                         url: subredditApiData.url,
                         nbSub: subredditApiData.subscribers,
                     };
