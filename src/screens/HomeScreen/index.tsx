@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import Feed from "../../components/Home/Feed";
+import Feed from "../../components/Feed";
 
 import styles from "./style";
 

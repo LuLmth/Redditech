@@ -5,7 +5,7 @@ import Header from "./Header";
 import Body from "./Body";
 import Footer from "./Footer";
 
-import { Post as PostType } from "../../../types/post";
+import { Post as PostType } from "../../types/post";
 
 interface PostProps {
     post: PostType;

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { FlatList, ActivityIndicator, View } from "react-native";
 import Post from "../Post";
 import Filter from "../Filter";
-import { ApiGetRequest } from "../../../services/ApiRequest";
-import { getValue } from "../../../services/SecureStore";
-import { Post as PostType, bodyFormat } from "../../../types/post";
-import { sorted } from "../../../types/filter";
+import { ApiGetRequest } from "../../services/ApiRequest";
+import { getValue } from "../../services/SecureStore";
+import { Post as PostType, bodyFormat } from "../../types/post";
+import { sorted } from "../../types/filter";
 
 import styles from "./style";
 
@@ -33,7 +33,7 @@ const Feed = () => {
         const isAVideo = postApiData.is_video;
         const isSelf = postApiData.is_self;
         const imagesArray = postApiData.preview ? postApiData.preview.images : [];
-        const body = { uri: null, format: bodyFormat.none };
+        const body = { uri: null, format: bodyFormat.none, textContent: null };
 
         if (isAVideo && postApiData.secure_media) {
             const mediaUrl = postApiData.secure_media.reddit_video.fallback_url;
@@ -44,8 +44,8 @@ const Feed = () => {
             body.format = bodyFormat.png;
         }
         if (isSelf) {
-            const textContent = postApiData.selftext;
-            console.log("Post have text in body", textContent);
+            body.textContent = postApiData.selftext;
+            body.format = bodyFormat.text;
         }
         return body;
     };

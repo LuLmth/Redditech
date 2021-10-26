@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import { View, Easing, TouchableWithoutFeedback } from "react-native";
+import { View, Easing, TouchableWithoutFeedback, Text } from "react-native";
 import ZoomImage from "react-native-zoom-image";
-import { Video } from "expo-av";
-import { Body as BodyType, bodyFormat } from "../../../../types/post";
+import { AVPlaybackStatus, Video } from "expo-av";
+import { Body as BodyType, bodyFormat } from "../../../types/post";
 
 import styles from "./style";
 
@@ -12,15 +12,10 @@ interface BodyProps {
 
 const Body = ({ bodyContent }: BodyProps) => {
     const videoRef = useRef<Video>(null);
-    const [status, setStatus] = useState({});
-
-    console.log("Format:", bodyContent.format, "URI:", bodyContent.uri);
-    if (bodyContent.uri === null || bodyContent.uri === undefined || bodyContent.format === bodyFormat.none) {
-        return <></>;
-    }
+    const [status, setStatus] = useState<AVPlaybackStatus>();
 
     const onPress = () => {
-        status.isPlaying ? video.current.pauseAsync() : video.current.playAsync();
+        !status.isPlaying ? videoRef.current.pauseAsync() : videoRef.current.playAsync();
     };
 
     return (
@@ -34,7 +29,7 @@ const Body = ({ bodyContent }: BodyProps) => {
                     easingFunc={Easing.ease}
                 />
             )}
-            {bodyContent.format === bodyFormat.mp4 && bodyContent.uri !== undefined && (
+            {bodyContent.uri !== null && bodyContent.format === bodyFormat.mp4 && (
                 <TouchableWithoutFeedback {...{ onPress }}>
                     <Video
                         ref={videoRef}
@@ -43,9 +38,14 @@ const Body = ({ bodyContent }: BodyProps) => {
                         resizeMode="contain"
                         isLooping
                         useNativeControls
-                        onPlaybackStatusUpdate={status => setStatus(() => status)}
+                        onPlaybackStatusUpdate={(stat) => setStatus(() => stat)}
                     />
                 </TouchableWithoutFeedback>
+            )}
+            {bodyContent.format === bodyFormat.text && (
+                <View style={styles.textContentView}>
+                    <Text style={styles.textContent} numberOfLines={4}>{bodyContent.textContent}</Text>
+                </View>
             )}
         </View>
     );

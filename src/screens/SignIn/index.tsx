@@ -8,7 +8,6 @@ import { REDDIT_CLIENT_ID, REDDIT_REDIRECT } from "react-native-dotenv";
 import { saveValue } from "../../services/SecureStore";
 import { LaunchRoutes } from "../../router/routes";
 
-import StyleGuide from "../../constants/StyleGuide";
 import styles from "./style";
 
 WebBrowser.maybeCompleteAuthSession();

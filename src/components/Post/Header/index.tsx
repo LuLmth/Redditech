@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import ProfilePicture from "../../../ProfilePicture";
-import { Header as HeaderType } from "../../../../types/post";
+import ProfilePicture from "../../ProfilePicture";
+import { Header as HeaderType } from "../../../types/post";
 
 import styles from "./style";
 

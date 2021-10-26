@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons, SimpleLineIcons, MaterialIcons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
-import { sorted } from "../../../types/filter";
+import { sorted } from "../../types/filter";
 
 import styles from "./style";
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { MaterialCommunityIcons, FontAwesome5, Ionicons } from "@expo/vector-icons";
 
-import { Footer as FooterType } from "../../../../types/post";
+import { Footer as FooterType } from "../../../types/post";
 import styles from "./style";
 
 interface FooterProps {
