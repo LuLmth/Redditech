@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { View, Easing, TouchableWithoutFeedback } from "react-native";
 import ZoomImage from "react-native-zoom-image";
-import Video from "react-native-video";
+import { Video } from "expo-av";
 import { Body as BodyType, bodyFormat } from "../../../../types/post";
 
 import styles from "./style";
@@ -12,14 +12,15 @@ interface BodyProps {
 
 const Body = ({ bodyContent }: BodyProps) => {
     const videoRef = useRef<Video>(null);
-    const [isPaused, setisPaused] = useState(false);
+    const [status, setStatus] = useState({});
 
-    if (bodyContent.uri === null || bodyContent.format === bodyFormat.none) {
+    console.log("Format:", bodyContent.format, "URI:", bodyContent.uri);
+    if (bodyContent.uri === null || bodyContent.uri === undefined || bodyContent.format === bodyFormat.none) {
         return <></>;
     }
 
     const onPress = () => {
-        setisPaused(!isPaused);
+        status.isPlaying ? video.current.pauseAsync() : video.current.playAsync();
     };
 
     return (
@@ -33,16 +34,16 @@ const Body = ({ bodyContent }: BodyProps) => {
                     easingFunc={Easing.ease}
                 />
             )}
-            {bodyContent.format === bodyFormat.mp4 && (
+            {bodyContent.format === bodyFormat.mp4 && bodyContent.uri !== undefined && (
                 <TouchableWithoutFeedback {...{ onPress }}>
                     <Video
                         ref={videoRef}
                         source={{ uri: bodyContent.uri }}
-                        repeat
                         style={styles.video}
-                        resizeMode="cover"
-                        paused={isPaused}
-                        onSeek={() => setisPaused(true)}
+                        resizeMode="contain"
+                        isLooping
+                        useNativeControls
+                        onPlaybackStatusUpdate={status => setStatus(() => status)}
                     />
                 </TouchableWithoutFeedback>
             )}

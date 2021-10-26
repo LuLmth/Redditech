@@ -30,8 +30,8 @@ const Feed = () => {
     }, []);
 
     const getBodyContent = (postApiData: any) => {
-        const isAVideo = postApiData.is_video === "true";
-        const isSelf = postApiData.is_self === "true";
+        const isAVideo = postApiData.is_video;
+        const isSelf = postApiData.is_self;
         const imagesArray = postApiData.preview ? postApiData.preview.images : [];
         const body = { uri: null, format: bodyFormat.none };
 

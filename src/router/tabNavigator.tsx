@@ -72,6 +72,7 @@ const tabNavigator = () => (
         <Tab.Screen
             name="Sub"
             component={SubRouter}
+            options={{ headerShown: false }}
         />
         <Tab.Screen
             name="Create"
