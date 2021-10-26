@@ -38,15 +38,20 @@ const SubContent = ({ uri, navigation }: SubContentProps) => {
     }, []);
 
     const getBodyContent = (postApiData: any) => {
-        const isAVideo = postApiData.is_video;
+        const isAVideo = postApiData.is_video && postApiData.secure_media !== null;
+        const isAGif = !postApiData.is_video && postApiData.secure_media !== null;
         const isSelf = postApiData.is_self;
         const imagesArray = postApiData.preview ? postApiData.preview.images : [];
         const body = { uri: null, format: bodyFormat.none, textContent: null };
 
-        if (isAVideo && postApiData.secure_media) {
+        if (isAVideo) {
             const mediaUrl = postApiData.secure_media.reddit_video.fallback_url;
             body.uri = mediaUrl;
             body.format = bodyFormat.mp4;
+        } else if (isAGif) {
+            const gifUrl = postApiData.secure_media.oembed.thumbnail_url;
+            body.uri = gifUrl;
+            body.format = bodyFormat.gif;
         } else if (imagesArray.length > 0) {
             body.uri = imagesArray[0].source.url;
             body.format = bodyFormat.png;
