@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     textContentView: { marginHorizontal: 8, marginTop: 8 },
     textContent: {
-        fontSize: 11,
+        fontSize: 12,
         color: "grey",
     },
 });
