@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SafeAreaView, Image, Text, TouchableOpacity } from "react-native";
 import * as WebBrowser from "expo-web-browser";
-import { makeRedirectUri, ResponseType, useAuthRequest } from "expo-auth-session";
+import { makeRedirectUri, useAuthRequest, exchangeCodeAsync } from "expo-auth-session";
 import { REDDIT_CLIENT_ID, REDDIT_REDIRECT } from "react-native-dotenv";
 import { saveValue } from "../../services/SecureStore";
 import { LaunchRoutes } from "../../router/routes";
@@ -18,25 +18,31 @@ const SignIn = () => {
         authorizationEndpoint: "https://www.reddit.com/api/v1/authorize.compact",
         tokenEndpoint: "https://www.reddit.com/api/v1/access_token",
     };
-    const [, responseAuth, PressToSignIn] = useAuthRequest(
-        {
-            responseType: ResponseType.Token,
-            clientId: REDDIT_CLIENT_ID || "",
-            scopes: ["identity", "mysubreddits", "read"],
-            redirectUri: makeRedirectUri({
-                scheme: REDDIT_REDIRECT || "",
-            }),
-        },
-        authDiscovery,
-    );
+    const authConfig = {
+        clientId: REDDIT_CLIENT_ID || "",
+        clientSecret: "",
+        scopes: ["identity", "mysubreddits", "read"],
+        redirectUri: makeRedirectUri({
+            scheme: REDDIT_REDIRECT || "",
+        }),
+    };
+    const [, responseAuth, PressToSignIn] = useAuthRequest(authConfig, authDiscovery);
 
     useEffect(() => {
-        if (responseAuth?.type === "success") {
-            const { access_token } = responseAuth.params;
-
-            saveValue("accessToken", access_token);
-            navigate("tabNavigator");
-        }
+        const getAccessTokenByAuthCode = async () => {
+            if (responseAuth?.type === "success") {
+                const authCode = responseAuth.params.code;
+                const configCode = { code: authCode };
+                const { accessToken } = await exchangeCodeAsync(
+                    { ...authConfig, ...configCode },
+                    authDiscovery,
+                );
+    
+                saveValue("accessToken", accessToken);
+                navigate("tabNavigator");
+            }
+        };
+        getAccessTokenByAuthCode();
     }, [responseAuth]);
 
     return (
