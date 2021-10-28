@@ -115,6 +115,9 @@ const Feed = () => {
             keyExtractor={({ id }) => id}
             ListHeaderComponent={<Filter filterValue={filterValue} setFilterValue={setFilterValue} />}
             showsVerticalScrollIndicator={false}
+            maxToRenderPerBatch={4}
+            initialNumToRender={4}
+            windowSize={5}
         />
     );
 };
