@@ -42,24 +42,6 @@ const SignIn = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Image source={require("../../assets/reddit-logo.png")} style={styles.image} />
-            {/* <TextInput
-                style={styles.inputUsername}
-                value={username}
-                placeholder="Username"
-                placeholderTextColor="grey"
-                selectionColor="white"
-                keyboardType="default"
-                onChangeText={onChangeTextUsername}
-            />
-            <TextInput
-                style={styles.inputPassword}
-                value={password}
-                placeholder="Password"
-                placeholderTextColor="grey"
-                selectionColor="white"
-                keyboardType="default"
-                onChangeText={onChangeTextPassword}
-            /> */}
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
