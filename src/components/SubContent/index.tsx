@@ -3,10 +3,12 @@ import { FlatList, ActivityIndicator, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Post from "../Post";
 import Filter from "../Filter";
+import Cover from "../Cover";
 import { ApiGetRequest } from "../../services/ApiRequest";
 import { getValue } from "../../services/SecureStore";
 
 import { Post as PostType, bodyFormat } from "../../types/post";
+import { SubCover as SubCoverType } from "../../types/subCover";
 import { sorted } from "../../types/filter";
 import { SubRoutes } from "../../router/routes";
 
@@ -22,6 +24,7 @@ interface SubContentProps {
 
 const SubContent = ({ uri, navigation }: SubContentProps) => {
     const [posts, setPosts] = useState<PostType[]>([]);
+    const [coverContent, setCoverContent] = useState<SubCoverType | undefined>();
     const [filterValue, setFilterValue] = useState<sorted>(sorted.best);
     const [accessToken, setAccessToken] = useState<string | null>(null);
 
@@ -35,6 +38,15 @@ const SubContent = ({ uri, navigation }: SubContentProps) => {
             }
         };
         fetchToken();
+        setCoverContent({
+            profilePicture: fakeProfilePicture,
+            imageBackground: "https://miro.medium.com/max/800/1*aisj_kQNEHcCFIOSsQLcVA.jpeg",
+            subRedditName: "Reddit",
+            nbSub: 4009,
+            nbOnline: 30,
+            description: "c'est juste une petite description pour tester",
+            isSub: true,
+        });
     }, []);
 
     const getBodyContent = (postApiData: any) => {
@@ -108,7 +120,7 @@ const SubContent = ({ uri, navigation }: SubContentProps) => {
         fetchPosts();
     }, [filterValue, accessToken]);
 
-    if (posts.length === 0) {
+    if (posts.length === 0 || coverContent === undefined) {
         return (
             <View style={styles.activityIndicator}>
                 <ActivityIndicator />
@@ -117,17 +129,21 @@ const SubContent = ({ uri, navigation }: SubContentProps) => {
     }
 
     return (
-        //display header and go back navigation with arrow
-        <FlatList
-            data={posts}
-            renderItem={({ item }) => <Post post={item} />}
-            keyExtractor={({ id }) => id}
-            ListHeaderComponent={<Filter filterValue={filterValue} setFilterValue={setFilterValue} />}
-            showsVerticalScrollIndicator={false}
-            maxToRenderPerBatch={4}
-            initialNumToRender={4}
-            windowSize={5}
-        />
+        <View style={{ flex: 1 }}>
+            {/* display header and go back navigation with arrow */}
+            <Cover subCoverContent={coverContent} navigation={navigation} />
+            <FlatList
+                data={posts}
+                renderItem={({ item }) => <Post post={item} />}
+                keyExtractor={({ id }) => id}
+                ListHeaderComponent={<Filter filterValue={filterValue} setFilterValue={setFilterValue} />}
+                showsVerticalScrollIndicator={false}
+                maxToRenderPerBatch={4}
+                initialNumToRender={4}
+                windowSize={5}
+                style={{ marginTop: 10 }}
+            />
+        </View>
     );
 };
 
