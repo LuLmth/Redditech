@@ -4,11 +4,11 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Post from "../Post";
 import Filter from "../Filter";
 import { ApiGetRequest } from "../../services/ApiRequest";
-import { getValue } from "../../services/SecureStore";
 
 import { Post as PostType, bodyFormat } from "../../types/post";
 import { sorted } from "../../types/filter";
 import { SubRoutes } from "../../router/routes";
+import { useAuthAccessToken } from "../../context/AuthContext";
 
 import styles from "./style";
 
@@ -21,21 +21,9 @@ interface SubContentProps {
 }
 
 const SubContent = ({ uri, navigation }: SubContentProps) => {
+    const { accessToken } = useAuthAccessToken();
     const [posts, setPosts] = useState<PostType[]>([]);
     const [filterValue, setFilterValue] = useState<sorted>(sorted.best);
-    const [accessToken, setAccessToken] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchToken = async () => {
-            try {
-                const token = await getValue("accessToken");
-                setAccessToken(token);
-            } catch (e) {
-                console.log(e.errors);
-            }
-        };
-        fetchToken();
-    }, []);
 
     const getBodyContent = (postApiData: any) => {
         const isAVideo = postApiData.is_video && postApiData.secure_media !== null;

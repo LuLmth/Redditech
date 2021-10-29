@@ -5,14 +5,15 @@ import { SafeAreaView, Image, Text, TouchableOpacity } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import { makeRedirectUri, useAuthRequest, exchangeCodeAsync } from "expo-auth-session";
 import { REDDIT_CLIENT_ID, REDDIT_REDIRECT } from "react-native-dotenv";
-import { saveValue } from "../../services/SecureStore";
 import { LaunchRoutes } from "../../router/routes";
+import { useAuthAccessToken } from "../../context/AuthContext";
 
 import styles from "./style";
 
 WebBrowser.maybeCompleteAuthSession();
 
 const SignIn = () => {
+    const { setAccessToken } = useAuthAccessToken();
     const { navigate } = useNavigation<StackNavigationProp<LaunchRoutes, "SignIn">>();
     const authDiscovery = {
         authorizationEndpoint: "https://www.reddit.com/api/v1/authorize.compact",
@@ -33,12 +34,12 @@ const SignIn = () => {
             if (responseAuth?.type === "success") {
                 const authCode = responseAuth.params.code;
                 const configCode = { code: authCode };
-                const { accessToken } = await exchangeCodeAsync(
+                const response = await exchangeCodeAsync(
                     { ...authConfig, ...configCode },
                     authDiscovery,
                 );
     
-                saveValue("accessToken", accessToken);
+                setAccessToken(response.accessToken);
                 navigate("tabNavigator");
             }
         };
