@@ -13,10 +13,9 @@ export const AuthContext = createContext<AuthAccessTokenContent>({
 export const useAuthAccessToken = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [accessToken, setAccessToken] = useState<string>('test-token');
+    const [accessToken, setAccessToken] = useState<string>('');
 
     useEffect(() => {
-        console.log("CHANGE ACCESS TOKEN VALUE : ", accessToken);
     }, [accessToken]);
 
     return (
