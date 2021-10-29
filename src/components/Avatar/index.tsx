@@ -1,70 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { View, Image, Text, ActivityIndicator } from "react-native";
-import { ApiGetRequest } from "../../services/ApiRequest";
-import { getValue } from "../../services/SecureStore";
-import { Profile as ProfileType } from "../../types/profile";
+import React from "react";
+import { View, Image } from "react-native";
 
 import styles from "./style";
 
-const Avatar = () => {
-    const [accessToken, setAccessToken] = useState<string | null>(null);
-    const [profile, setProfile] = useState<ProfileType | null>(null);
+interface AvatarProps {
+    uri: string;
+}
 
-    useEffect(() => {
-        const fetchToken = async () => {
-            try {
-                const token = await getValue("accessToken");
-                setAccessToken(token);
-            } catch (e) {
-                console.log(e.errors);
-            }
-        };
-        fetchToken();
-    }, []);
-
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const profileData = await ApiGetRequest(`/api/v1/me?raw_json=1`, accessToken || "");
-                const createdProfileDate = new Date(profileData.created * 1000);
-                const diffDays = (new Date().getTime() - createdProfileDate.getTime()) / (1000 * 3600 * 24);
-                const profileCompleted: ProfileType = {
-                    profilePicture: profileData.subreddit.icon_img,
-                    username: profileData.subreddit.display_name_prefixed,
-                    karma: profileData.total_karma,
-                    days: Math.round(diffDays),
-                    description: profileData.subreddit.public_description,
-                };
-                setProfile(profileCompleted);
-            } catch (e) {
-                console.log(e.errors);
-            }
-        };
-        fetchProfile();
-    }, [accessToken]);
-
-    if (!profile) {
-        return (
-            <View style={styles.activityIndicator}>
-                <ActivityIndicator />
-            </View>
-        );
-    }
-
-    return (
-        <View style={styles.container}>
-            <Image
-                source={{
-                    uri: profile.profilePicture,
-                }}
-                style={styles.image}
-            />
-            <Text style={styles.username}>{profile.username}</Text>
-            <Text style={styles.username}>Karma: {profile.karma}</Text>
-            <Text style={styles.username}>Creation: {profile.days} d</Text>
-            <Text style={styles.username}>Description: {profile.description}</Text>
-        </View>
-    );
-};
+const Avatar = ({ uri }: AvatarProps) => (
+    <View style={styles.container}>
+        <Image
+            source={{
+                uri,
+            }}
+            style={styles.image}
+        />
+    </View>
+);
 
 export default Avatar;
