@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { ImageBackground, View, TouchableOpacity } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { useAuthAccessToken } from "../../context/AuthContext";
 
 import { ApiGetRequest } from "../../services/ApiRequest";
-import { getValue } from "../../services/SecureStore";
 
 import styles from "./style";
 
 const Header = () => {
-    const [accessToken, setAccessToken] = useState<string | null>(null);
+    const { accessToken } = useAuthAccessToken();
     const [isActive, setIsActive] = useState<boolean>(true);
     const [search, setSearch] = useState<string>("");
     const [profileImage, setProfileImage] = useState<string>("");
@@ -26,18 +26,6 @@ const Header = () => {
         // }
         // TODO: call API
     };
-
-    useEffect(() => {
-        const fetchToken = async () => {
-            try {
-                const token = await getValue("accessToken");
-                setAccessToken(token);
-            } catch (e) {
-                console.log(e.errors);
-            }
-        };
-        fetchToken();
-    }, []);
 
     useEffect(() => {
         const fetchProfileImage = async () => {

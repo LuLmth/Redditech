@@ -3,25 +3,14 @@ import { View, ActivityIndicator } from "react-native";
 import Avatar from "../Avatar";
 import ProfileInfo from "../ProfileInfo";
 import { Profile as ProfileType } from "../../types/profile";
-import { getValue } from "../../services/SecureStore";
 import { ApiGetRequest } from "../../services/ApiRequest";
+import { useAuthAccessToken } from "../../context/AuthContext";
+
 import styles from "./style";
 
 const Profile = () => {
-    const [accessToken, setAccessToken] = useState<string | null>(null);
+    const { accessToken } = useAuthAccessToken();
     const [profile, setProfile] = useState<ProfileType | null>(null);
-
-    useEffect(() => {
-        const fetchToken = async () => {
-            try {
-                const token = await getValue("accessToken");
-                setAccessToken(token);
-            } catch (e) {
-                console.log(e.errors);
-            }
-        };
-        fetchToken();
-    }, []);
 
     useEffect(() => {
         const fetchProfile = async () => {

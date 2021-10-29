@@ -5,12 +5,12 @@ import Post from "../Post";
 import Filter from "../Filter";
 import Cover from "../Cover";
 import { ApiGetRequest } from "../../services/ApiRequest";
-import { getValue } from "../../services/SecureStore";
 
 import { Post as PostType, bodyFormat } from "../../types/post";
 import { SubCover as SubCoverType } from "../../types/subCover";
 import { sorted } from "../../types/filter";
 import { SubRoutes } from "../../router/routes";
+import { useAuthAccessToken } from "../../context/AuthContext";
 
 import styles from "./style";
 
@@ -23,21 +23,12 @@ interface SubContentProps {
 }
 
 const SubContent = ({ uri, navigation }: SubContentProps) => {
+    const { accessToken } = useAuthAccessToken();
     const [posts, setPosts] = useState<PostType[]>([]);
     const [coverContent, setCoverContent] = useState<SubCoverType | undefined>();
     const [filterValue, setFilterValue] = useState<sorted>(sorted.best);
-    const [accessToken, setAccessToken] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchToken = async () => {
-            try {
-                const token = await getValue("accessToken");
-                setAccessToken(token);
-            } catch (e) {
-                console.log(e.errors);
-            }
-        };
-        fetchToken();
         setCoverContent({
             profilePicture: fakeProfilePicture,
             imageBackground: "https://miro.medium.com/max/800/1*aisj_kQNEHcCFIOSsQLcVA.jpeg",
@@ -46,7 +37,7 @@ const SubContent = ({ uri, navigation }: SubContentProps) => {
             nbOnline: 30,
             description: "c'est juste une petite description pour tester",
             isSub: true,
-        });
+        }); // TODO: remove fake datas
     }, []);
 
     const getBodyContent = (postApiData: any) => {
@@ -130,7 +121,6 @@ const SubContent = ({ uri, navigation }: SubContentProps) => {
 
     return (
         <View style={{ flex: 1 }}>
-            {/* display header and go back navigation with arrow */}
             <Cover subCoverContent={coverContent} navigation={navigation} />
             <FlatList
                 data={posts}

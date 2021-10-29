@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, ActivityIndicator, View } from "react-native";
 import { ApiGetRequest } from "../../services/ApiRequest";
-import { getValue } from "../../services/SecureStore";
 import SubReddit from "../SubReddit";
 import { SubReddit as SubRedditType } from "../../types/sub";
+import { useAuthAccessToken } from "../../context/AuthContext";
 
 import styles from "./style";
 
 const SubRedditList = () => {
     const [subReddit, setSubReddit] = useState<SubRedditType[]>([]);
-    const [accessToken, setAccessToken] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchToken = async () => {
-            try {
-                const token = await getValue("accessToken");
-                setAccessToken(token);
-            } catch (e) {
-                console.log(e.errors);
-            }
-        };
-        fetchToken();
-    }, []);
+    const { accessToken } = useAuthAccessToken();
 
     useEffect(() => {
         const fetchSubs = async () => {
