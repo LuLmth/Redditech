@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Text } from "react-native";
 import Avatar from "../Avatar";
 import ProfileInfo from "../ProfileInfo";
 import { Profile as ProfileType } from "../../types/profile";
-import { ApiGetRequest } from "../../services/ApiRequest";
+import { Preference as PreferenceType } from "../../types/preference";
+import { ApiGetRequest, ApiPatchRequest } from "../../services/ApiRequest";
 import { useAuthAccessToken } from "../../context/AuthContext";
 
 import styles from "./style";
@@ -11,6 +12,17 @@ import styles from "./style";
 const Profile = () => {
     const { accessToken } = useAuthAccessToken();
     const [profile, setProfile] = useState<ProfileType | null>(null);
+    const [preference, setPreference] = useState<PreferenceType | null>(null);
+
+    const updatePreferences = async () => {
+        if (!preference) return;
+
+        try {
+            await ApiPatchRequest(`/api/v1/me/prefs`, accessToken || "", preference);
+        } catch (e) {
+            console.log(e.errors);
+        }
+    };
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -30,7 +42,26 @@ const Profile = () => {
                 console.log(e.errors);
             }
         };
+        const fetchProfilePreferences = async () => {
+            try {
+                const profilePrefData = await ApiGetRequest(`/api/v1/me/prefs?raw_json=1`, accessToken || "");
+                const preferences: PreferenceType = {
+                    show_presence: profilePrefData.show_presence,
+                    over_18: profilePrefData.over_18,
+                    email_private_message: profilePrefData.email_private_message,
+                    email_user_new_follower: profilePrefData.email_user_new_follower,
+                    email_username_mention: profilePrefData.email_username_mention,
+                    email_upvote_post: profilePrefData.email_upvote_post,
+                };
+
+                setPreference(preferences);
+            } catch (e) {
+                console.log(e.errors);
+            }
+        };
+
         fetchProfile();
+        fetchProfilePreferences();
     }, [accessToken]);
 
     if (!profile) {

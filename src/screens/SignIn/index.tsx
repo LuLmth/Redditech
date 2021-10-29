@@ -22,7 +22,7 @@ const SignIn = () => {
     const authConfig = {
         clientId: REDDIT_CLIENT_ID || "",
         clientSecret: "",
-        scopes: ["identity", "mysubreddits", "read"],
+        scopes: ["identity", "mysubreddits", "read", "account"],
         redirectUri: makeRedirectUri({
             scheme: REDDIT_REDIRECT || "",
         }),

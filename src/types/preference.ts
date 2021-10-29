@@ -1,0 +1,1 @@
+export type Preference = { show_presence: boolean, over_18: boolean, email_private_message: boolean, email_user_new_follower: boolean, email_username_mention: boolean, email_upvote_post: boolean }
