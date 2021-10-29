@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: 100,
     },
-    profilePicturePosition: { marginLeft: 25, marginTop: 44 },
+    profilePicturePosition: { marginRight: 20, marginTop: 44 },
     profilePicture: { borderRadius: 1000, borderWidth: 1, width: 36, height: 36, position: "relative" },
     searchBarContainer: {
         marginTop: 45,
-        marginRight: 15,
+        marginLeft: 20,
         width: "75%",
         height: 38,
         borderRadius: 10,

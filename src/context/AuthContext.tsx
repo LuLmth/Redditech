@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export type AuthAccessTokenContent = {
     accessToken: string,
-    setAccessToken: (a: string) => void,
+    setAccessToken: React.Dispatch<React.SetStateAction<string>>
 }
 
 export const AuthContext = createContext<AuthAccessTokenContent>({

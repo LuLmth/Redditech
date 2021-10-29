@@ -41,6 +41,17 @@ const Header = () => {
 
     return (
         <View style={styles.container}>
+            <Searchbar
+                placeholder="Search"
+                {...{ onChangeText }}
+                value={search}
+                inputStyle={styles.input}
+                selectionColor="white"
+                placeholderTextColor="grey"
+                {...{ onSubmitEditing }}
+                style={styles.searchBarContainer}
+                iconColor="grey"
+            />
             <TouchableOpacity
                 onPress={() => {
                     setIsActive(!isActive);
@@ -57,17 +68,6 @@ const Header = () => {
                     </ImageBackground>
                 )}
             </TouchableOpacity>
-            <Searchbar
-                placeholder="Search"
-                {...{ onChangeText }}
-                value={search}
-                inputStyle={styles.input}
-                selectionColor="white"
-                placeholderTextColor="grey"
-                {...{ onSubmitEditing }}
-                style={styles.searchBarContainer}
-                iconColor="grey"
-            />
         </View>
     );
 };
