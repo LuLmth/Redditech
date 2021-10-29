@@ -26,7 +26,7 @@ const SubRouter = () => (
             name="SubContent"
             component={SubContentScreen}
             options={{ headerShown: false }}
-            initialParams={{ uri: "" }}
+            initialParams={{ subRedditInfo: {} }}
         />
     </SubStack.Navigator>
 );

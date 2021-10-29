@@ -1,3 +1,5 @@
+import { SubReddit as SubRedditType } from "../../types/sub";
+
 export type LaunchRoutes = {
     SignIn: undefined;
     tabNavigator: undefined;
@@ -13,5 +15,5 @@ export type TabNavigatorRoutes = {
 
 export type SubRoutes = {
     Sub: undefined;
-    SubContent: { uri: string };
+    SubContent: { subRedditInfo: SubRedditType };
 };

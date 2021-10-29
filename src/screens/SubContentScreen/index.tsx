@@ -9,11 +9,11 @@ import styles from "./style";
 type SubContentScreenProps = NativeStackScreenProps<SubRoutes, 'SubContent'>; // TODO: do interface
 
 const SubContentScreen = ({ route, navigation }: SubContentScreenProps) => {
-    const { uri } = route.params;
+    const { subRedditInfo } = route.params;
 
     return (
         <SafeAreaView style={styles.container}>
-            <SubContent {...{ uri }} {...{ navigation }} />
+            <SubContent {...{ subRedditInfo }} {...{ navigation }} />
         </SafeAreaView>
     );
 };

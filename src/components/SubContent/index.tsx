@@ -8,6 +8,7 @@ import { ApiGetRequest } from "../../services/ApiRequest";
 
 import { Post as PostType, bodyFormat } from "../../types/post";
 import { SubCover as SubCoverType } from "../../types/subCover";
+import { SubReddit as SubRedditType } from "../../types/sub";
 import { sorted } from "../../types/filter";
 import { SubRoutes } from "../../router/routes";
 import { useAuthAccessToken } from "../../context/AuthContext";
@@ -16,13 +17,15 @@ import styles from "./style";
 
 const fakeProfilePicture =
     "https://air-marketing-assets.s3.amazonaws.com/blog/logo-db/reddit-logo/reddit-logo-png-1.png";
+const fakeBannerPicture =
+    "https://miro.medium.com/max/800/1*aisj_kQNEHcCFIOSsQLcVA.jpeg";
 
 interface SubContentProps {
-    uri: string;
+    subRedditInfo: SubRedditType;
     navigation: NativeStackNavigationProp<SubRoutes, "SubContent">;
 }
 
-const SubContent = ({ uri, navigation }: SubContentProps) => {
+const SubContent = ({ subRedditInfo, navigation }: SubContentProps) => {
     const { accessToken } = useAuthAccessToken();
     const [posts, setPosts] = useState<PostType[]>([]);
     const [coverContent, setCoverContent] = useState<SubCoverType | undefined>();
@@ -30,14 +33,14 @@ const SubContent = ({ uri, navigation }: SubContentProps) => {
 
     useEffect(() => {
         setCoverContent({
-            profilePicture: fakeProfilePicture,
-            imageBackground: "https://miro.medium.com/max/800/1*aisj_kQNEHcCFIOSsQLcVA.jpeg",
-            subRedditName: "Reddit",
-            nbSub: 4009,
-            nbOnline: 30,
-            description: "c'est juste une petite description pour tester",
+            profilePicture: subRedditInfo.profilePicture || fakeProfilePicture,
+            imageBackground: subRedditInfo.bannerPicture || fakeBannerPicture,
+            subRedditName: subRedditInfo.subRedditName || 'SubReddit',
+            nbSub: subRedditInfo.nbSub || 0,
+            nbOnline: 0,
+            description: subRedditInfo.description || '',
             isSub: true,
-        }); // TODO: remove fake datas
+        });
     }, []);
 
     const getBodyContent = (postApiData: any) => {
@@ -82,7 +85,7 @@ const SubContent = ({ uri, navigation }: SubContentProps) => {
         setPosts([]);
         const fetchPosts = async () => {
             try {
-                const postsData = await ApiGetRequest(`${uri}${filterValue}?raw_json=1`, accessToken || "");
+                const postsData = await ApiGetRequest(`${subRedditInfo.url}${filterValue}?raw_json=1`, accessToken || "");
                 const postArray: PostType[] = postsData.data.children.map((postApi: any) => {
                     const postApiData = postApi.data;
                     const postElement: PostType = {

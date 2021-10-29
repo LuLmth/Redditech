@@ -16,7 +16,7 @@ interface SubRedditProps {
 const SubReddit = ({ subRedditContent }: SubRedditProps) => {
     const { navigate } = useNavigation<StackNavigationProp<SubRoutes, "Sub">>();
     const onPress = () => {
-        navigate("SubContent", { uri: subRedditContent.url } );
+        navigate("SubContent", { subRedditInfo: subRedditContent } );
     };
 
     return (

@@ -21,8 +21,10 @@ const SubRedditList = () => {
                         id: subredditApiData.id,
                         subRedditName: subredditApiData.display_name_prefixed,
                         profilePicture: subredditApiData.community_icon || subredditApiData.icon_img,
+                        bannerPicture: subredditApiData.banner_background_image,
                         url: subredditApiData.url,
                         nbSub: subredditApiData.subscribers,
+                        description: subredditApiData.public_description,
                     };
                     return subredditElement;
                 });
