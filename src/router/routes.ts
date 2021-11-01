@@ -7,7 +7,7 @@ export type LaunchRoutes = {
 
 export type TabNavigatorRoutes = {
     Home: undefined;
-    Sub: undefined;
+    subNavigator: undefined;
     Create: undefined;
     Chat: undefined;
     Profile: undefined;

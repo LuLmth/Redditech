@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, ActivityIndicator, Text, Switch } from "react-native";
+import { View, ActivityIndicator, Text, Switch, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { LaunchRoutes } from "../../router/routes";
 import Avatar from "../Avatar";
 import ProfileInfo from "../ProfileInfo";
 import { Profile as ProfileType } from "../../types/profile";
@@ -11,6 +14,8 @@ import styles from "./style";
 import StyleGuide from "../../constants/StyleGuide";
 
 const Profile = () => {
+    const { navigate } = useNavigation<StackNavigationProp<LaunchRoutes, "tabNavigator">>();
+
     const { accessToken } = useAuthAccessToken();
     const [profile, setProfile] = useState<ProfileType | null>(null);
     const [preference, setPreference] = useState<PreferenceType | null>(null);
@@ -87,7 +92,7 @@ const Profile = () => {
         fetchProfilePreferences();
     }, [accessToken]);
 
-    if (!profile) {
+    if (!profile || !preference) {
         return (
             <View style={styles.activityIndicator}>
                 <ActivityIndicator />
@@ -104,66 +109,99 @@ const Profile = () => {
                 created={profile.days}
                 description={profile.description}
             />
-            <Switch
-                trackColor={{ true: "green", false: "white" }}
-                thumbColor={StyleGuide.palette.background}
-                ios_backgroundColor="white"
-                onValueChange={() => {
-                    setIsShowPresence(!isShowPresence);
-                    updatePreferences();
+            <View style={styles.row}>
+                <Text style={styles.switchText}>Show Presence</Text>
+                <Switch
+                    trackColor={{ true: "green", false: "white" }}
+                    thumbColor={StyleGuide.palette.background}
+                    ios_backgroundColor="white"
+                    onValueChange={async () => {
+                        setIsShowPresence((previousState) => !previousState);
+                        updatePreferences();
+                    }}
+                    value={isShowPresence}
+                    style={styles.switch}
+                />
+            </View>
+            <View style={styles.row}>
+                <Text style={styles.switchText}>Over 18</Text>
+                <Switch
+                    trackColor={{ true: "green", false: "white" }}
+                    thumbColor={StyleGuide.palette.background}
+                    ios_backgroundColor="white"
+                    onValueChange={() => {
+                        setIsOver18((previousState) => !previousState);
+                        updatePreferences();
+                    }}
+                    value={isOver18}
+                    style={styles.switch}
+                />
+            </View>
+            <View style={styles.row}>
+                <Text style={styles.switchText}>Email Private Message</Text>
+                <Switch
+                    trackColor={{ true: "green", false: "white" }}
+                    thumbColor={StyleGuide.palette.background}
+                    ios_backgroundColor="white"
+                    onValueChange={() => {
+                        setIsEmailPrivateMessage((previousState) => !previousState);
+                        updatePreferences();
+                    }}
+                    value={isEmailPrivateMessage}
+                    style={styles.switch}
+                />
+            </View>
+            <View style={styles.row}>
+                <Text style={styles.switchText}>Email User New Follower</Text>
+                <Switch
+                    trackColor={{ true: "green", false: "white" }}
+                    thumbColor={StyleGuide.palette.background}
+                    ios_backgroundColor="white"
+                    onValueChange={() => {
+                        setIsEmailNewFollower((previousState) => !previousState);
+                        updatePreferences();
+                    }}
+                    value={isEmailNewFollower}
+                    style={styles.switch}
+                />
+            </View>
+            <View style={styles.row}>
+                <Text style={styles.switchText}>Email Username Mention</Text>
+                <Switch
+                    trackColor={{ true: "green", false: "white" }}
+                    thumbColor={StyleGuide.palette.background}
+                    ios_backgroundColor="white"
+                    onValueChange={() => {
+                        setIsEmailUsernameMention((previousState) => !previousState);
+                        updatePreferences();
+                    }}
+                    value={isEmailUsernameMention}
+                    style={styles.switch}
+                />
+            </View>
+            <View style={styles.row}>
+                <Text style={styles.switchText}>Email UpVote Post</Text>
+                <Switch
+                    trackColor={{ true: "green", false: "white" }}
+                    thumbColor={StyleGuide.palette.background}
+                    ios_backgroundColor="white"
+                    onValueChange={() => {
+                        setIsEmailUpVotePost((previousState) => !previousState);
+                        updatePreferences();
+                    }}
+                    value={isEmailUpVotePost}
+                    style={styles.switch}
+                />
+            </View>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                    navigate("SignIn");
                 }}
-                value={isShowPresence}
-            />
-            <Switch
-                trackColor={{ true: "green", false: "white" }}
-                thumbColor={StyleGuide.palette.background}
-                ios_backgroundColor="white"
-                onValueChange={() => {
-                    setIsOver18(!isOver18);
-                    updatePreferences();
-                }}
-                value={isOver18}
-            />
-            <Switch
-                trackColor={{ true: "green", false: "white" }}
-                thumbColor={StyleGuide.palette.background}
-                ios_backgroundColor="white"
-                onValueChange={() => {
-                    setIsEmailPrivateMessage(!isEmailPrivateMessage);
-                    updatePreferences();
-                }}
-                value={isEmailPrivateMessage}
-            />
-            <Switch
-                trackColor={{ true: "green", false: "white" }}
-                thumbColor={StyleGuide.palette.background}
-                ios_backgroundColor="white"
-                onValueChange={() => {
-                    setIsEmailNewFollower(!isEmailNewFollower);
-                    updatePreferences();
-                }}
-                value={isEmailNewFollower}
-            />
-            <Switch
-                trackColor={{ true: "green", false: "white" }}
-                thumbColor={StyleGuide.palette.background}
-                ios_backgroundColor="white"
-                onValueChange={() => {
-                    setIsEmailUsernameMention(!isEmailUsernameMention);
-                    updatePreferences();
-                }}
-                value={isEmailUsernameMention}
-            />
-            <Switch
-                trackColor={{ true: "green", false: "white" }}
-                thumbColor={StyleGuide.palette.background}
-                ios_backgroundColor="white"
-                onValueChange={() => {
-                    setIsEmailUpVotePost(!isEmailUpVotePost);
-                    updatePreferences();
-                }}
-                value={isEmailUpVotePost}
-            />
+                activeOpacity={0.8}
+            >
+                <Text style={styles.buttonText}>Log out</Text>
+            </TouchableOpacity>
         </View>
     );
 };

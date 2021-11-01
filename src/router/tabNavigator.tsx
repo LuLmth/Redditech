@@ -23,7 +23,7 @@ const tabNavigator = () => (
                 if (route.name === "Home") {
                     return <Ionicons name={focused ? "home-sharp" : "home-outline"} color={color} size={size} />;
                 }
-                if (route.name === "Sub") {
+                if (route.name === "subNavigator") {
                     return (
                         <MaterialCommunityIcons
                             name={focused ? "folder-search" : "folder-search-outline"}
@@ -70,7 +70,7 @@ const tabNavigator = () => (
             }}
         />
         <Tab.Screen
-            name="Sub"
+            name="subNavigator"
             component={SubRouter}
             options={{ headerShown: false }}
         />
