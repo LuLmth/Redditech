@@ -1,4 +1,5 @@
 import { Preference as PreferenceType } from "../types/preference";
+import { Subscribe as SubscribeType } from "../types/subscribe";
 
 const reditApiUrl = 'https://oauth.reddit.com';
 
@@ -23,6 +24,18 @@ export const ApiPatchRequest = async (route: string, accessToken: string, data: 
             'User-Agent': 'BorisJonhsonApp',
         },
         body: JSON.stringify(data),
+    });
+    return request.json();
+};
+
+export const ApiPostSubscribeRequest = async (route: string, accessToken: string) => {
+    const request = await fetch(`${reditApiUrl}${route}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `bearer ${accessToken}`,
+            'User-Agent': 'BorisJonhsonApp',
+        },
     });
     return request.json();
 };

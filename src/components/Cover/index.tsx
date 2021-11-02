@@ -4,6 +4,9 @@ import { AntDesign } from "@expo/vector-icons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SubRoutes } from "../../router/routes";
 import { SubCover as SubCoverType } from "../../types/subCover";
+import { ApiPostSubscribeRequest } from "../../services/ApiRequest";
+import { useAuthAccessToken } from "../../context/AuthContext";
+import { Subscribe as SubscribeType } from "../../types/subscribe";
 
 import styles from "./style";
 
@@ -13,14 +16,23 @@ interface CoverProps {
 }
 
 const Cover = ({ subCoverContent, navigation }: CoverProps) => {
+    const { accessToken } = useAuthAccessToken();
     const [isSub, setIsSub] = useState<boolean>(subCoverContent.isSub);
 
     const onPressArrow = () => {
         navigation.goBack();
     };
 
-    const onPressSub = () => {
-        // TODO: call API
+    const onPressSub = async () => {
+        const subscribeData: SubscribeType = {
+            action: isSub ? 'unsub' : 'sub',
+            sr_name: subCoverContent.subRedditName.replace('r/', ''),
+        };
+        try {
+            const response = await ApiPostSubscribeRequest(`/api/subscribe?action=${subscribeData.action}&sr_name=${subscribeData.sr_name}`, accessToken || "");
+        } catch (e) {
+            console.log(e.errors);
+        }
         setIsSub(!isSub);
     };
 
@@ -47,8 +59,6 @@ const Cover = ({ subCoverContent, navigation }: CoverProps) => {
             </View>
             <View style={[styles.row, { marginLeft: "3%" }]}>
                 <Text style={styles.info}>{subCoverContent.nbSub} Users subscribed</Text>
-                <Text style={styles.info}> • </Text>
-                <Text style={styles.info}>{subCoverContent.nbOnline} Online</Text>
             </View>
             <Text style={styles.description} numberOfLines={4}>
                 {subCoverContent.description}
